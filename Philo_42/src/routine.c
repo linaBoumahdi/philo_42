@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:32:45 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/05 18:26:10 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:20:15 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ unsigned long	get_time(void)
 }
 void	philo_print(char *arg, t_philo *philo)
 {
-	t_data *data;
-	int time;
-	
-	data = philo->data;
-	pthread_mutex_lock(&data->m_print);
-	time = get_time() - philo->has_started; 
-	if(!data->stop_philo)
-		printf("%s\n", arg); // a completer et indexer philo ID
-	pthread_mutex_unlock(&data->m_print);
+	//why is data empty >????
+	//t_data *data;
+	//int time;
+	// (void)philo;
+	// (void)data;
+	//data = philo->data;
+	pthread_mutex_lock(&philo->data->m_print);
+	//time = get_time() - philo->has_started; 
+	printf("%s\n", arg); 
+	//printf("here\n");
+	// a completer et indexer philo ID
+	pthread_mutex_unlock(&philo->data->m_print);
 }
 
 void	is_eating(t_philo *philo)
@@ -54,6 +57,7 @@ void	is_eating(t_philo *philo)
 
 void	is_sleeping(t_philo *philo)
 {
+	printf("here\n");
 	ft_usleep(philo->data->t_to_sleep);
 }
 
