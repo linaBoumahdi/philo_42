@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:24:50 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:32:25 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,18 @@ int	init_data(t_data *data, char **av)
 	return(0);
 }
 
-// int	keep_running(t_data *data)
-// {
-// 	//all_eaten
-// 	//one_dead->return -1
-// 	if (check_if_dead(data->philos) == 1 || check_if_all_ate(data->philos) == 1)
-// 			return(0);
-// 	return(1);
-// }
+
+void	is_thinking(t_philo *philo)
+{
+	philo_print("is thinking", philo);
+}
+
+void	philo_print(char *arg, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->m_print);
+	printf("%s\n", arg); 
+	pthread_mutex_unlock(&philo->data->m_print);
+}
 void	*routine(void *arg)
 {
 	t_philo *philo;
@@ -53,36 +57,12 @@ void	*routine(void *arg)
 
 	i = 0;
 	philo = (t_philo *)arg;
-	//while(keep_running(philo->data))//separete between lonely philo :(
 	while(i < 10)
 	{
-		//printf("%d\n", philo->p_id);
-		// is_eating(philo);
-		// is_sleeping(philo);
 		is_thinking(philo);
 		i++;
 	}
-	
 	return (NULL);
-}
-
-void	assign_forks(t_data *data, int i)
-{
-	if(i == 0)
-	{
-		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[data->n_philo];
-	}	
-	else if (i % 2 == 0)
-	{
-		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[i - 1];
-	}
-	else
-	{
-		data->philos[i].l_fork = &data->forks[i - 1];
-		data->philos[i].r_fork = &data->forks[i];
-	}
 }
 int	init_philo(t_data *data)
 {
@@ -94,14 +74,12 @@ int	init_philo(t_data *data)
 		return(-1);
 	while(i < data->n_philo)
 	{
-		//printf("%d\n", i);
 		data->philos[i].has_started = get_time();
 		data->philos[i].has_eaten = 0;
 		data->philos[i].last_meal = get_time(); // ???????
 		data->philos[i].p_id = i;
 		data->philos[i].t_id = 0;
 		data->philos[i].data = data;
-		assign_forks(data, i);
 		i++;
 	}
 	return(0);
@@ -112,18 +90,8 @@ int init_mutex(t_data *data)
 	int i;
 
 	i = 0;
-	while(i++ < data->n_philo)// check incrementation
-	{
-		if(pthread_mutex_init(&data->forks[i], NULL))
-			return(-1);
-			//destroy_philo(data);// or 0 ??? // a coder	
-	}
 	if(pthread_mutex_init(&data->m_print, NULL))
 		return(-1);
-	// if(pthread_mutex_init(&data->m_dead, NULL))
-	// 	return(-1);
-	// if(pthread_mutex_init(&data->m_meal, NULL))
-	// 	return(-1);
 	return(0);
 }
 int	start_philo(t_data *data)
@@ -131,22 +99,19 @@ int	start_philo(t_data *data)
 	int i;
 
 	i = 0;
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->n_philo);
-	if (!data->forks)
-			return(-1);
+	
 	
 	if(init_mutex(data) == -1)
 	{
-		free(data->forks);
-		//free(data->philos);
+		
 		return(-1);
 	}
 	if(init_philo(data) == -1)
 	{
-		free(data->forks);
-		return (-1); // a voir
+	
+		return (-1); 
 	}
-	while(i < data->n_philo)// check incrementation
+	while(i < data->n_philo)
 	{
 		printf("%d\n", i);
 		if(pthread_create(&data->philos[i].t_id, NULL, routine, &(data->philos[i])))
@@ -154,16 +119,17 @@ int	start_philo(t_data *data)
    			 perror("Thread creation failed");
   			  return (-1);
 		}
-		// if(data->n_philo == 1)
-		// 	{
-		// 		lonely_philo();
-		// 		break;
-		// 	}
+	
 		i++;
 	}
-	
-	//rip_philo(data); // check if dead
-	//quit_philo(data);
+	 for(i = 0; i < data->n_philo; i++)
+    {
+        if(pthread_join(data->philos[i].t_id, NULL) != 0)
+        {
+            perror("Thread join failed");
+            return (-1);
+        }
+    }
 	return(0);
 }
 int main(int ac, char **av)
@@ -171,14 +137,14 @@ int main(int ac, char **av)
 	t_data	data;
 
 	if(ac != 5 && ac != 6)
-		return(-1);//error a gerer 
-	//data = malloc(sizeof(t_data));
+		return(-1);
+
 	if(init_data(&data, av) != 0)
 		return(-1);
 	if(start_philo(&data) == -1)
 		return(-1);
-	// //potentially ? 
-	free_mutex(&data); // ptential seg fault 
+ 
+	free_mutex(&data);
 	// free(data);
 	return(0);
 }

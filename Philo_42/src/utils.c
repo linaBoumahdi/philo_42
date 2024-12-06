@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:36:11 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:19:08 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:33:22 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	free_mutex(t_data *data)
 	pthread_mutex_destroy(&data->m_print);
 	// pthread_mutex_destroy(&data->m_meal);
 	// pthread_mutex_destroy(&data->m_dead);
-	while (i < data->n_philo)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
+// 	while (i < data->n_philo)
+// 	{
+// 		pthread_mutex_destroy(&data->forks[i]);
+// 		i++;
+// 	}
 }
