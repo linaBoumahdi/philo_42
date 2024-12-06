@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:54:37 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:45:24 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,15 +126,28 @@ int init_mutex(t_data *data)
 		return(-1);
 	return(0);
 }
+
+
+void	*bigbrother(void *arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	while(1)
+	{
+		if(is_rip(philo) || are_full(philo))
+			break;
+	}
+}
 int	start_philo(t_data *data)
 {
 	int i;
+	int	big_brother;
 
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->n_philo);
 	if (!data->forks)
 			return(-1);
-	
 	if(init_mutex(data) == -1)
 	{
 		free(data->forks);
@@ -146,6 +159,8 @@ int	start_philo(t_data *data)
 		free(data->forks);
 		return (-1); // a voir
 	}
+	if(pthread_create(&big_brother, NULL, bigbrother, &(data->philos)))
+		return(-1);
 	while(i < data->n_philo)// check incrementation
 	{
 		printf("%d\n", i);
@@ -165,7 +180,8 @@ int	start_philo(t_data *data)
     {
         if(pthread_join(data->philos[i].t_id, NULL) != 0)
         {
-            perror("Thread join failed");
+           //destroy
+		    perror("Thread join failed");
             return (-1);
         }
     }
