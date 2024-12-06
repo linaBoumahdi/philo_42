@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:32:45 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:20:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:51:47 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	is_eating(t_philo *philo)
 
 void	is_sleeping(t_philo *philo)
 {
-	printf("here\n");
 	ft_usleep(philo->data->t_to_sleep);
 }
 

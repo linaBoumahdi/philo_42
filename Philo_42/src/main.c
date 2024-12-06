@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:24:50 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:54:37 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	*routine(void *arg)
 	i = 0;
 	philo = (t_philo *)arg;
 	//while(keep_running(philo->data))//separete between lonely philo :(
-	while(i < 10)
+	while(i < 5)
 	{
 		//printf("%d\n", philo->p_id);
-		// is_eating(philo);
-		// is_sleeping(philo);
+		is_eating(philo);
+		is_sleeping(philo);
 		is_thinking(philo);
 		i++;
 	}
@@ -120,10 +120,10 @@ int init_mutex(t_data *data)
 	}
 	if(pthread_mutex_init(&data->m_print, NULL))
 		return(-1);
-	// if(pthread_mutex_init(&data->m_dead, NULL))
-	// 	return(-1);
-	// if(pthread_mutex_init(&data->m_meal, NULL))
-	// 	return(-1);
+	if(pthread_mutex_init(&data->m_dead, NULL))
+		return(-1);
+	if(pthread_mutex_init(&data->m_meal, NULL))
+		return(-1);
 	return(0);
 }
 int	start_philo(t_data *data)
@@ -161,7 +161,14 @@ int	start_philo(t_data *data)
 		// 	}
 		i++;
 	}
-	
+	for(i = 0; i < data->n_philo; i++)
+    {
+        if(pthread_join(data->philos[i].t_id, NULL) != 0)
+        {
+            perror("Thread join failed");
+            return (-1);
+        }
+    }
 	//rip_philo(data); // check if dead
 	//quit_philo(data);
 	return(0);
