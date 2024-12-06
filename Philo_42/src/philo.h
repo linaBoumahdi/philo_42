@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:00:56 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 14:19:13 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:24:30 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	philo_print(char *arg, t_philo *philo);
 unsigned long	get_time(void);
 long	ft_atoi(const char *arg);
 void	ft_usleep(long time);
+void	*bigbrother(void *arg);
 void	free_mutex(t_data *data);
 
 
