@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:32:45 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:51:47 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:45:54 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@ unsigned long	get_time(void)
 }
 void	philo_print(char *arg, t_philo *philo)
 {
-	//why is data empty >????
-	//t_data *data;
-	//int time;
-	// (void)philo;
-	// (void)data;
-	//data = philo->data;
+	int time;
 	pthread_mutex_lock(&philo->data->m_print);
-	//time = get_time() - philo->has_started; 
+	time = get_time() - philo->has_started; 
 	printf("%s\n", arg); 
-	//printf("here\n");
 	// a completer et indexer philo ID
 	pthread_mutex_unlock(&philo->data->m_print);
 }

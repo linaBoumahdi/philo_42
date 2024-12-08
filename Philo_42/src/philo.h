@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:00:56 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 23:24:30 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:31:56 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef	struct s_philo{
 	pthread_t 	t_id;
 	unsigned long		last_meal;
 	int			has_eaten;
+	bool		is_dead;
 	unsigned long	has_started;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t *r_fork;
@@ -61,6 +62,7 @@ void	is_thinking(t_philo *philo);
 void	is_eating(t_philo *philo);
 void	philo_print(char *arg, t_philo *philo);
 unsigned long	get_time(void);
+void	*bigbrother(void *arg);
 long	ft_atoi(const char *arg);
 void	ft_usleep(long time);
 void	*bigbrother(void *arg);

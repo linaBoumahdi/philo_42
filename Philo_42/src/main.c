@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 23:22:56 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:44:20 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*routine(void *arg)
 	i = 0;
 	philo = (t_philo *)arg;
 	//while(keep_running(philo->data))//separete between lonely philo :(
-	while(i < 5)
+	while(!(philo->data->stop_philo))
 	{
 		//printf("%d\n", philo->p_id);
 		is_eating(philo);
@@ -101,6 +101,7 @@ int	init_philo(t_data *data)
 		data->philos[i].p_id = i;
 		data->philos[i].t_id = 0;
 		data->philos[i].data = data;
+		data->philos[i].is_dead = 0;
 		assign_forks(data, i);
 		i++;
 	}
@@ -131,7 +132,7 @@ int init_mutex(t_data *data)
 int	start_philo(t_data *data)
 {
 	int i;
-	int	big_brother;
+	pthread_t big_brother;
 
 	i = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->n_philo);
@@ -165,6 +166,8 @@ int	start_philo(t_data *data)
 		// 	}
 		i++;
 	}
+	if(pthread_join(big_brother, NULL) != 0)
+		return (-1);//errors
 	for(i = 0; i < data->n_philo; i++)
     {
         if(pthread_join(data->philos[i].t_id, NULL) != 0)
@@ -184,7 +187,6 @@ int main(int ac, char **av)
 
 	if(ac != 5 && ac != 6)
 		return(-1);//error a gerer 
-	//data = malloc(sizeof(t_data));
 	if(init_data(&data, av) != 0)
 		return(-1);
 	if(start_philo(&data) == -1)
