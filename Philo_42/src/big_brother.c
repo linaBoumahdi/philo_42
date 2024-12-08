@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 22:05:25 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/08 19:46:29 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:15:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void check_philos(t_philo *philo)
 
 	while(i < philo->data->n_philo)
 	{
+		printf("is philo [%d]\n", i);
 		check_philos(&philo[i]); 
 		if (philo[i].is_dead) 
 		{
+			philo_print("is dead\n", &philo[i]);
 			pthread_mutex_lock(&(philo[i].data)->m_dead);
 			philo->data->stop_philo = 1;
 			pthread_mutex_unlock(&(philo[i].data)->m_dead);
-			return (1);
+			return (10);
 		}
 		i++;
 	}
@@ -57,7 +59,7 @@ void	*bigbrother(void *arg)
 	{
 		// if(stop_philo(philo) || are_full(philo))
 		// 	break;
-		if(stop_philo(philo) || are_full(philo))
+		if(stop_philo(philo) == 10)
 		{
 			printf("hey\n");
 			break;

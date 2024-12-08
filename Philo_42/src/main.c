@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/08 19:44:20 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/08 20:12:06 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*routine(void *arg)
 	i = 0;
 	philo = (t_philo *)arg;
 	//while(keep_running(philo->data))//separete between lonely philo :(
-	while(!(philo->data->stop_philo))
+	while(i < 5)
 	{
 		//printf("%d\n", philo->p_id);
 		is_eating(philo);
@@ -97,7 +97,7 @@ int	init_philo(t_data *data)
 		//printf("%d\n", i);
 		data->philos[i].has_started = get_time();
 		data->philos[i].has_eaten = 0;
-		data->philos[i].last_meal = get_time(); // ???????
+		data->philos[i].last_meal =0; // ???????
 		data->philos[i].p_id = i;
 		data->philos[i].t_id = 0;
 		data->philos[i].data = data;
@@ -149,11 +149,8 @@ int	start_philo(t_data *data)
 		free(data->forks);
 		return (-1); // a voir
 	}
-	if(pthread_create(&big_brother, NULL, bigbrother, &(data->philos)))
-		return(-1);
 	while(i < data->n_philo)// check incrementation
 	{
-		printf("%d\n", i);
 		if(pthread_create(&data->philos[i].t_id, NULL, routine, &(data->philos[i])))
 		{
    			 perror("Thread creation failed");
@@ -166,6 +163,8 @@ int	start_philo(t_data *data)
 		// 	}
 		i++;
 	}
+	if(pthread_create(&big_brother, NULL, bigbrother, &(data->philos)))
+		return(-1);
 	if(pthread_join(big_brother, NULL) != 0)
 		return (-1);//errors
 	for(i = 0; i < data->n_philo; i++)
