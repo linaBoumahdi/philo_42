@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:36:11 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 16:39:35 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:17:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ void	ft_usleep(long time)
 	long	start;
 
 	start = get_time();
-	if (start == -1)
-		return ;
-	while ( (long)get_time() - start < time)
+	while ((get_time() - start) < time)
 		usleep(500);
+
 }
 
 void	free_mutex(t_data *data)
