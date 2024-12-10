@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:00:56 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/09 16:16:25 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:50:25 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,4 @@ long	ft_atoi(const char *arg);
 void	ft_usleep(long time);
 void	*bigbrother(void *arg);
 void	free_mutex(t_data *data);
-
-
-
-
-
 #endif

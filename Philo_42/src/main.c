@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:00:39 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/09 16:24:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:23:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	*routine(void *arg)
 		is_sleeping(philo);
 		is_thinking(philo);
 	}
-	
 	return (arg);
 }
 
@@ -55,18 +54,18 @@ void	assign_forks(t_data *data, int i)
 {
 	if(i == 0)
 	{
-		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[data->n_philo - 1];
+		data->philos[i].l_fork = &data->forks[data->n_philo];
+		data->philos[i].r_fork = &data->forks[i];
 	}	
 	else if (i % 2 == 0)
 	{
-		data->philos[i].l_fork = &data->forks[i - 1];
-		data->philos[i].r_fork = &data->forks[i];
+		data->philos[i].l_fork = &data->forks[i ];
+		data->philos[i].r_fork = &data->forks[i - 1];
 	}
 	else
 	{
-		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[i - 1];
+		data->philos[i].l_fork = &data->forks[i - 1];
+		data->philos[i].r_fork = &data->forks[i ];
 	}
 }
 int	init_philo(t_data *data)
@@ -153,9 +152,9 @@ int	start_philo(t_data *data)
             return (-1);
         }
     }
-
 	return(0);
 }
+
 int main(int ac, char **av)
 {
 	t_data	data;

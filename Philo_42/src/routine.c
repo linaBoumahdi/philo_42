@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:32:45 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/09 16:16:34 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:50:00 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	philo_print(char *arg, t_philo *philo)
 	pthread_mutex_lock(&philo->data->m_print);
 	time = get_time() - philo->has_started; 
 	if(!death_is_here(philo))
-		printf("%i %d %s \n",time, philo->p_id + 1, arg); 
+		printf("%i %d %s\n",time, philo->p_id + 1, arg); 
 	pthread_mutex_unlock(&philo->data->m_print);
 }
 

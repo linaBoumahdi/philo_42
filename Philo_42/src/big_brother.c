@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 22:05:25 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/09 16:17:00 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:55:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int check_philos(t_philo *philo)
  {
 	int i;
 	i = 0;
-
+	
 	while(i < philo->data->n_philo)
 	{ 
 		if (check_philos(&philo[i])) 
