@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:36:11 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/09 16:17:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:42:41 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,34 @@ void	free_mutex(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+	free(data->forks);
+	free(data->philos);
+}
+int	is_dig(char *av)
+{
+	int i;
+
+	i = 0;
+	while(av[i])
+	{
+		if(av[i] < '0' || av[i] > '9')
+			return(0);
+		i++;
+	}
+	return (1);
+}
+int	check_data (char **av)
+{
+	if(ft_atoi(av[1]) > 400 || ft_atoi(av[1]) <= 0 
+	|| !is_dig(av[1]))
+		return(write(2, "Invalid arg\n", 12), 1);
+	if(ft_atoi(av[2]) <= 0 || !is_dig(av[2]))
+		return(write(2, "Invalid arg\n", 12), 1);
+	if(ft_atoi(av[3]) <= 0 || !is_dig(av[3]))
+		return(write(2, "Invalid ar3\n", 12), 1);
+	if(ft_atoi(av[4]) <= 0 || !is_dig(av[4]))
+		return(write(2, "Invalid arg\n", 12), 1);
+	if(av[5] && (ft_atoi(av[5]) < 0 || !is_dig(av[5])))
+		return(write(2, "Invalid arg\n", 12), 1);
+	return(0);
 }

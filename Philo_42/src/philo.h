@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:00:56 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/10 18:50:25 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:24:55 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int main(int ac, char **av);
 int init_mutex(t_data *data);
 int	start_philo(t_data *data);
 int	init_philo(t_data *data);
+int	check_data (char **av);
 void	assign_forks(t_data * data, int i);
 void	*routine(void *arg);
 int	init_data(t_data *data, char **av);
